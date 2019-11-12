@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collection;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -53,9 +54,11 @@ public class User implements UserDetails{
 	private Role role;
 	
 	@NotNull
+	@Column(name = "date_of_birth")
 	private LocalDate dateOfBirth;
 	
 	@NotNull
+	@Enumerated(EnumType.STRING)
 	private Gender gender;
 
 	@Override
