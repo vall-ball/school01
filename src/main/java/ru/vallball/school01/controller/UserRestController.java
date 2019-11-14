@@ -28,28 +28,27 @@ import ru.vallball.school01.service.UserService;
 @RestController
 @RequestMapping(value = "/users", produces = "application/json")
 public class UserRestController {
-	
+
 	@Autowired
 	UserService userService;
-	
+
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(UserRestController.class);
-	
+
 	@GetMapping
 	@ResponseBody
 	public List<User> list() {
 		return userService.list();
 	}
-	
+
 	@PostMapping
 	public ResponseEntity<Object> createUser(@Valid @RequestBody User user) {
-		logger.info("We have a request to post-method");
 		userService.save(user.toUser(passwordEncoder));
 		return new ResponseEntity<>("User is created successfully", HttpStatus.CREATED);
 	}
-	
+
 	@PutMapping("/{id}")
 	public ResponseEntity<Object> updateUser(@PathVariable(value = "id") Long id, @RequestBody User user) {
 		try {
@@ -74,10 +73,9 @@ public class UserRestController {
 		try {
 			userService.delete(id);
 		} catch (EmptyResultDataAccessException e) {
-			//logger.info("User not found");
 			return new ResponseEntity<>("User not found", HttpStatus.BAD_REQUEST);
 		}
 		return new ResponseEntity<>("User is deleted successfully", HttpStatus.ACCEPTED);
 	}
-	
+
 }

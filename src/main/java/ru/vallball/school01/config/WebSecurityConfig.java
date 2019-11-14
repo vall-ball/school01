@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -34,18 +33,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		logger.info("Аутентифицируем...");
 		auth.userDetailsService(userService).passwordEncoder(passwordEncoder());
 	}
 
 	protected void configure(HttpSecurity http) throws Exception {
-		logger.info("Аутентифицируем11...");
-		http.authorizeRequests().antMatchers("/users/**").hasRole("ADMIN").and().httpBasic()
-				.authenticationEntryPoint(restAuthenticationEntryPoint)
-				.and().csrf().disable();
-		//antMatchers(HttpMethod.GET, "/users").hasRole("ADMIN")
-		//.antMatchers(HttpMethod.POST, "/users").hasRole("ADMIN") 
-		//hasRole("ADMIN")
+		http.authorizeRequests().antMatchers("/users/**").hasRole("ADMIN")
+		.and().authorizeRequests().antMatchers("/classes/**").hasRole("ADMIN").and().httpBasic()
+				.authenticationEntryPoint(restAuthenticationEntryPoint).and().csrf().disable();
+		// antMatchers(HttpMethod.GET, "/users").hasRole("ADMIN")
+		// .antMatchers(HttpMethod.POST, "/users").hasRole("ADMIN")
+		// hasRole("ADMIN")
 		// .and().formLogin().disable();
 		// .antMatchers("/users/changeProfile", "/forClient").hasAnyRole("CLIENT",
 		// "ADMIN").and().authorizeRequests()

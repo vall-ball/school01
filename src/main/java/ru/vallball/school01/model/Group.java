@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -31,9 +33,13 @@ public class Group {
 	@JoinColumn(name = "teacher_id")
 	User teacher;
 
-	@OneToMany
-	@JoinColumn(name = "class_id")
-	private List<User> users = new ArrayList<>();
+	@OneToMany(fetch = FetchType.EAGER)
+	@JoinTable (
+	        name="class_students",
+	        joinColumns={ @JoinColumn(name="class_id", referencedColumnName="id") },
+	        inverseJoinColumns={@JoinColumn(name="student_id", referencedColumnName="id")}
+	    )
+	private List<User> users;
 
 	public String getName() {
 		return name;
