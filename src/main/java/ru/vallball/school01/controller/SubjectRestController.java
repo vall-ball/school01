@@ -18,50 +18,48 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import ru.vallball.school01.model.Group;
-import ru.vallball.school01.service.GroupService;
+
+import ru.vallball.school01.model.Subject;
+import ru.vallball.school01.service.SubjectService;
 
 @RestController
-@RequestMapping(value = "/classes", produces = "application/json")
-public class GroupRestController {
+@RequestMapping(value = "/subjects", produces = "application/json")
+public class SubjectRestController {
 
 	@Autowired
-	GroupService groupService;
+	SubjectService subjectService;
 
 	@GetMapping
 	@ResponseBody
-	public List<Group> list() {
-		return groupService.list();
+	public List<Subject> list() {
+		return subjectService.list();
 	}
 
 	@PostMapping
-	public ResponseEntity<Object> createGroup(@Valid @RequestBody Group group) {
-		groupService.save(group);
-		return new ResponseEntity<>("Class is created successfully", HttpStatus.CREATED);
+	public ResponseEntity<Object> createGroup(@Valid @RequestBody Subject subject) {
+		subjectService.save(subject);
+		return new ResponseEntity<>("Subject is created successfully", HttpStatus.CREATED);
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<Object> updateClass(@PathVariable(value = "id") Long id, @RequestBody Group group) {
+	public ResponseEntity<Object> updateClass(@PathVariable(value = "id") Long id, @RequestBody Subject subject) {
 		try {
-			Group groupForUpdate = groupService.findGroupById(id);
-			groupForUpdate.setName(group.getName());
-			groupForUpdate.setTeacher(group.getTeacher());
-			groupForUpdate.setUsers(group.getUsers());
-			groupService.save(groupForUpdate);
+			Subject subjectForUpdate = subjectService.findSubjectById(id);
+			subjectForUpdate.setName(subject.getName());
+			subjectService.save(subjectForUpdate);
 		} catch (NoSuchElementException e) {
-			return new ResponseEntity<>("Group not found", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>("Subject not found", HttpStatus.BAD_REQUEST);
 		}
-		return new ResponseEntity<>("Group is udated successfully", HttpStatus.ACCEPTED);
+		return new ResponseEntity<>("Subject is udated successfully", HttpStatus.ACCEPTED);
 	}
-	
+
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Object> deleteTour(@PathVariable(value = "id") Long id) {
 		try {
-			groupService.delete(id);
+			subjectService.delete(id);
 		} catch (EmptyResultDataAccessException e) {
-			return new ResponseEntity<>("Group not found", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>("Subject not found", HttpStatus.BAD_REQUEST);
 		}
-		return new ResponseEntity<>("Group is deleted successfully", HttpStatus.ACCEPTED);
+		return new ResponseEntity<>("Subject is deleted successfully", HttpStatus.ACCEPTED);
 	}
-
 }

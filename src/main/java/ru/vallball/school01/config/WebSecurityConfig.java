@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -38,6 +39,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests().antMatchers("/users/**").hasRole("ADMIN")
+		.and().authorizeRequests().antMatchers(HttpMethod.GET, "/subjects").permitAll()
+		.and().authorizeRequests().antMatchers(HttpMethod.POST, "/subjects").hasRole("ADMIN")
+		.and().authorizeRequests().antMatchers(HttpMethod.PUT, "/subjects/**").hasRole("ADMIN")
+		.and().authorizeRequests().antMatchers(HttpMethod.DELETE, "/subject/**").hasRole("ADMIN")
 		.and().authorizeRequests().antMatchers("/classes/**").hasRole("ADMIN").and().httpBasic()
 				.authenticationEntryPoint(restAuthenticationEntryPoint).and().csrf().disable();
 		// antMatchers(HttpMethod.GET, "/users").hasRole("ADMIN")

@@ -1,6 +1,5 @@
 package ru.vallball.school01.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -16,6 +15,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
+
 @Entity
 @Table(name = "classes")
 public class Group {
@@ -25,7 +25,7 @@ public class Group {
 	private Long id;
 
 	@NotNull
-	@Pattern(regexp = "\\d{0,1}\\d{1}[А-Я]")
+	@Pattern(regexp = "^[1]?\\d{1}[А-Я]{1}$")
 	private String name;
 
 	@NotNull
