@@ -13,11 +13,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-
+/*
 @Entity
-@Table(name = "schedules")
+@Table(name = "schedules")*/
 public class Schedule {
-	
+	/*
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -27,7 +27,7 @@ public class Schedule {
 	
 	private List<Map<LocalTime, Subject>> schedule = new ArrayList<>();
 	private Map<DayOfWeek, Map<LocalTime, Subject>> schedule1 = new HashMap<>();
-	
+	*/
 	
 
 }

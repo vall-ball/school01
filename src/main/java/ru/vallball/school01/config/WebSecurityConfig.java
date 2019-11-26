@@ -43,6 +43,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		.and().authorizeRequests().antMatchers(HttpMethod.POST, "/subjects").hasRole("ADMIN")
 		.and().authorizeRequests().antMatchers(HttpMethod.PUT, "/subjects/**").hasRole("ADMIN")
 		.and().authorizeRequests().antMatchers(HttpMethod.DELETE, "/subject/**").hasRole("ADMIN")
+		.and().authorizeRequests().antMatchers("/dayschedules/**").hasAnyRole("ADMIN","TEACHER","DIRECTOR")
 		.and().authorizeRequests().antMatchers("/classes/**").hasRole("ADMIN").and().httpBasic()
 				.authenticationEntryPoint(restAuthenticationEntryPoint).and().csrf().disable();
 		// antMatchers(HttpMethod.GET, "/users").hasRole("ADMIN")
