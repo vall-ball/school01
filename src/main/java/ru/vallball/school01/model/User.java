@@ -20,6 +20,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "users")
@@ -55,6 +57,7 @@ public class User implements UserDetails{
 	
 	@NotNull
 	@Column(name = "date_of_birth")
+	@JsonFormat(pattern = "yyyy.MM.dd")
 	private LocalDate dateOfBirth;
 	
 	@NotNull
