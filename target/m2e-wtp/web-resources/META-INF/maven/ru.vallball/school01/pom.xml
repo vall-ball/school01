@@ -15,7 +15,7 @@
 		<failOnMissingWebXml>false</failOnMissingWebXml>
 
 
-		<springframework.version>6.0.17</springframework.version>
+		<springframework.version>6.1.8</springframework.version>
 
 
 	</properties>
